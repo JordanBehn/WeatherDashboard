@@ -5,11 +5,10 @@ $("#currentDay").text(mom);
 $("#search").click(function() {
     let cityInput = $("#cityInput").val();
 
-    renderToday(cityInput);
-    renderFiveDay(cityInput);
+    renderForecast(cityInput);
 })
 
-function renderToday(cityInput) {
+function renderForecast(cityInput) {
     //apikey = "87f0c9d5a9813668cae2ebe11bcb2972";
     let queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityInput + "&units=imperial&appid=87f0c9d5a9813668cae2ebe11bcb2972";
     $.ajax({
@@ -30,44 +29,58 @@ function renderToday(cityInput) {
         $('#humidity').text("Humidity: " + humidity);
         $('#wind').text("Windspeed: " + wind);
         //get lat and long for uv index, call uv index
-        let lat = response.city.coord.lat;
-        let long = response.city.coord.lon;
+        lat = response.city.coord.lat;
+        long = response.city.coord.lon;
 
         let uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + long + "&appid=87f0c9d5a9813668cae2ebe11bcb2972";
         $.ajax({
-            url: uvURL,
-            method: "GET"
-        }).then(function(UVresponse) {
-            // console.log(UVresponse.value);
-            $("#uv-index").text("UV index: " + UVresponse.value);
-        })
+                url: uvURL,
+                method: "GET"
+            }).then(function(UVresponse) {
+                // console.log(UVresponse.value);
+                $("#uv-index").text("UV index: " + UVresponse.value);
+            })
+            //run renderFiveDay
+        renderFiveDay(lat, long)
+    })
+
+}
+
+function renderFiveDay(lat, long) {
+    //empty forecast html
+    $(".days").html("");
+    let currentDate = moment().date();
+    //query for daily weather info
+    let fiveDayURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&units=imperial&appid=87f0c9d5a9813668cae2ebe11bcb2972";
+    console.log(fiveDayURL);
+    $.ajax({
+        url: fiveDayURL,
+        method: "GET"
+    }).then(function(fiveDayresponse) {
+        console.log(fiveDayresponse);
+
+        for (i = 1; i < 6; i++) {
+            //make div for each day, starting with i = 1 because we aren't interested in current day
+            let dayDiv = $("<day-" + i + " id=day-" + i + ">");
+            $(".days").append(dayDiv);
+            //increment date
+            dayInc = moment().date(currentDate + i).format("MM/DD");
+
+            let tempMax = (fiveDayresponse.daily[i].temp.max);
+            let tempMin = (fiveDayresponse.daily[i].temp.min);
+            let hum = (fiveDayresponse.daily[i].humidity);
+            let icon = (fiveDayresponse.daily[i].weather[0].icon);
+            //add date, icon, temp, humidity
+            $("#day-" + i).append("<h2>" + dayInc + "</h2>");
+            $("#day-" + i).append("<p>High of " + tempMax + " degrees</p>");
+            $("#day-" + i).append("<p>Low of " + tempMin + " degrees</p>");
+            $("#day-" + i).append("<p>Humidity: " + hum + "</p>");
+            $("#day-" + i).append("<image src='http://openweathermap.org/img/wn/" + icon + "@2x.png'>");
+
+        }
     })
 }
 
-function renderFiveDay(cityInput) {
-    $(".days").html("")
-    let currentDate = moment().date();
-    for (i = 1; i < 6; i++) {
-        //make div for each day
-        let dayDiv = $("<day-" + i + " id=day-" + i + ">");
-        $(".days").append(dayDiv);
-        //increment date
-        dayInc = moment().date(currentDate + i).format("MM/DD");
-        //query for weather info
-        //api.openweathermap.org/data/2.5/forecast/daily?q={city name}&cnt={cnt}&appid={API key}
-
-        let fiveDayURL = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + cityInput + "&cnt=6&appid=87f0c9d5a9813668cae2ebe11bcb2972";
-        console.log(fiveDayURL);
-        $.ajax({
-                url: fiveDayURL,
-                method: "GET"
-            }).then(function(fiveDayresponse) {
-                // console.log(fiveDayresponse);
-            })
-            //add date, icon, temp, humidity
-        $("#day-" + i).append("<h2>" + dayInc + "</h2");
-    }
-}
 // let currentDate = moment().date();
 // console.log(moment().date());
 // console.log(currentDate + 1);
