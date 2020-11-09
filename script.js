@@ -34,6 +34,7 @@ function renderForecast(cityInput) {
         let weatherIcon = response.list[0].weather[0].icon;
         //display weather info
         $('#city').text(city);
+        $('#todayIcon').html("<image src='https://openweathermap.org/img/wn/" + weatherIcon + "@2x.png'>");
         $('#temp').text("Temperature: " + temp);
         $('#humidity').text("Humidity: " + humidity);
         $('#wind').text("Windspeed: " + wind);
@@ -49,6 +50,7 @@ function renderForecast(cityInput) {
                 // console.log(UVresponse.value);
                 $("#uv-index").text("UV index: " + UVresponse.value);
                 //add class based on severity of uv index
+                $('#uv-index').removeClass();
                 if (UVresponse.value >= 8) {
                     $('#uv-index').addClass('severe')
                 } else if (UVresponse.value >= 5) {
@@ -100,12 +102,12 @@ function renderFiveDay(lat, long) {
 
 function renderCityButtons() {
     $("#previousSearches").html('')
-    var cityBtns = JSON.parse(window.localStorage.getItem("cities"));
+    var cityBtns = JSON.parse(window.localStorage.getItem("cities")) || [];
     //for each city in local storage, create and append button
     for (var i = 0; i < cityBtns.length; i++) {
         var btnDiv = $("<div>");
         var btn = $("<button>");
-        btn.addClass("city-btn");
+        btn.addClass("city-btn btn-primary col");
         btn.attr("name", cityBtns[i]);
         btn.text(cityBtns[i]);
         btnDiv.append(btn);
@@ -114,6 +116,5 @@ function renderCityButtons() {
 }
 //on city button click, get forecast for that city
 $(".city-btn").click(function() {
-    console.log($(this).attr("name"))
     renderForecast($(this).attr("name"));
 })
