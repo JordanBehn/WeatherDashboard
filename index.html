@@ -13,24 +13,25 @@
 </head>
 
 <body>
-    <header class="jumbotron">
-        <h1>Weather Dashboard</h1>
-        <p id="currentDay" class="lead"></p>
-    </header>
-    <div class="container">
-        <div class="row">
-            <div class="col-6">
-                <p class="row">Enter a city to get a forecast!</p>
-                <p class="row"><input id="cityInput" type="text" placeholder="Enter city name"><button id="search" type="submit">submit</button></p>
+    <main class="container">
+        <header class="jumbotron">
+            <h1>Weather Dashboard</h1>
+            <p id="currentDay" class="lead"></p>
+            <div class="row">
+                <div class="col-6">
+                    <p class="row">Enter a city to get a forecast!</p>
+                    <p class="row"><input id="cityInput" type="text" placeholder="Enter city name"><button id="search" type="submit">submit</button></p>
+                </div>
+                <div class="col-6">
+                    <p class="row">Previous Searches:</p>
+                    <div id="previousSearches"></div>
+                </div>
             </div>
-            <div class="col-6">
-                <p class="row">Previous Searches:</p>
-                <div id="cityPrevious"></div>
-            </div>
-        </div>
+        </header>
         <today class="today-row row mb-3">
             <div class="col-3 mx-auto">
                 <h1 id="city"> </h1>
+                <div id="todayIcon"></div>
                 <div id="temp"></div>
                 <div id="humidity"></div>
                 <div id="wind"></div>
@@ -39,41 +40,7 @@
         </today>
         <five-day class="days row justify-content-center">
         </five-day>
-    </div>
-    <!-- <script>
-        //get current moment
-        var mom = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
-        $("#currentDay").text(mom);
-        //on click of button run api call
-        $("#search").click(function() {
-            let cityInput = $("#cityInput").val();
-            let apikey = "87f0c9d5a9813668cae2ebe11bcb2972";
-            let queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityInput + "&units=imperial&appid=" + apikey;
-            $.ajax({
-                url: queryURL,
-                method: "GET"
-            }).then(function(response) {
-                console.log(response)
-                let city = response.city.name;
-                let temp = response.list[0].main.temp;
-                let humidity = response.list[0].main.humidity;
-                let wind = response.list[0].wind.speed;
-                //get lat and long for uv index, call uv index
-                let lat = response.city.coord.lat;
-                let long = response.city.coord.lon;
-                console.log(lat);
-                console.log(long);
-                let uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + long + "&appid=" + apikey;
-                $.ajax({
-                    url: uvURL,
-                    method: "GET"
-                }).then(function(UVresponse) {
-                    console.log(UVresponse.value)
-                    $("#uv-index").text("" + UVresponse.value);
-                })
-            })
-        })
-    </script> -->
+    </main>
     <script src="./script.js "></script>
 </body>
 
