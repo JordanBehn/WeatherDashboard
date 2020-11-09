@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- <link rel="stylesheet" href="style.css" /> -->
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
@@ -18,28 +18,27 @@
         <p id="currentDay" class="lead"></p>
     </header>
     <div class="container">
-        <p class="row">Enter a city to get a forecast!</p>
-        <p class="row"><input id="cityInput" type="text" placeholder="Enter city name"></p>
-        <button id="search" type="submit">submit</button>
-        <p class="row">Previous Searches:</p>
-        <div id="cityPrevious"></div>
-
-        <today class="today-row row">
-            <div class="col">
-                <div id="city"></div>
+        <div class="row">
+            <div class="col-6">
+                <p class="row">Enter a city to get a forecast!</p>
+                <p class="row"><input id="cityInput" type="text" placeholder="Enter city name"><button id="search" type="submit">submit</button></p>
+            </div>
+            <div class="col-6">
+                <p class="row">Previous Searches:</p>
+                <div id="cityPrevious"></div>
+            </div>
+        </div>
+        <today class="today-row row mb-3">
+            <div class="col-3 mx-auto">
+                <h1 id="city"> </h1>
                 <div id="temp"></div>
                 <div id="humidity"></div>
                 <div id="wind"></div>
                 <div id="uv-index"></div>
             </div>
         </today>
-
-        <five-day class="days row">
+        <five-day class="days row justify-content-center">
         </five-day>
-
-
-
-
     </div>
     <!-- <script>
         //get current moment
