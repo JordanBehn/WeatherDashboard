@@ -1,0 +1,30 @@
+header {
+    text-align: center;
+}
+
+.days {
+    padding-top: 50px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 25px;
+}
+
+#uv-index {
+    font-weight: bolder;
+}
+
+.severe {
+    color: darkred
+}
+
+.high {
+    color: orange
+}
+
+.med {
+    color: yellow
+}
+
+.low {
+    color: greenyellow
+}
