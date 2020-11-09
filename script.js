@@ -39,6 +39,16 @@ function renderForecast(cityInput) {
             }).then(function(UVresponse) {
                 // console.log(UVresponse.value);
                 $("#uv-index").text("UV index: " + UVresponse.value);
+                //add class based on severity of uv index
+                if (UVresponse.value >= 8) {
+                    $('#uv-index').addClass('severe')
+                } else if (UVresponse.value >= 5) {
+                    $('#uv-index').addClass('high')
+                } else if (UVresponse.value >= 3) {
+                    $('#uv-index').addClass('med')
+                } else {
+                    $('#uv-index').addClass('low')
+                }
             })
             //run renderFiveDay
         renderFiveDay(lat, long)
@@ -72,17 +82,11 @@ function renderFiveDay(lat, long) {
             let icon = (fiveDayresponse.daily[i].weather[0].icon);
             //add date, icon, temp, humidity
             $("#day-" + i).append("<h2>" + dayInc + "</h2>");
-            $("#day-" + i).append("<p>High of " + tempMax + " degrees</p>");
-            $("#day-" + i).append("<p>Low of " + tempMin + " degrees</p>");
-            $("#day-" + i).append("<p>Humidity: " + hum + "</p>");
             $("#day-" + i).append("<image src='https://openweathermap.org/img/wn/" + icon + "@2x.png'>");
+            $("#day-" + i).append("<p>High of " + tempMax + " F</p>");
+            $("#day-" + i).append("<p>Low of " + tempMin + " F</p>");
+            $("#day-" + i).append("<p>Humidity: " + hum + "%</p>");
 
         }
     })
 }
-
-// let currentDate = moment().date();
-// console.log(moment().date());
-// console.log(currentDate + 1);
-// currentDate++;
-// console.log(moment().date(currentDate).format("MM/DD"))

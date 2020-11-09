@@ -8,7 +8,7 @@
     <!-- <link rel="stylesheet" href="style.css" /> -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
 
 </head>
 
@@ -18,14 +18,11 @@
         <p id="currentDay" class="lead"></p>
     </header>
     <div class="container">
-        <div class="row">
-            <p>Enter a city to get a forecast!</p>
-            <input id="cityInput" type="text" placeholder="Enter city name">
-            <button id="search" type="submit"></button>
-            <p>Previous Searches</p>
-            <div id="cityPrevious"></div>
-
-        </div>
+        <p class="row">Enter a city to get a forecast!</p>
+        <p class="row"><input id="cityInput" type="text" placeholder="Enter city name"></p>
+        <button id="search" type="submit">submit</button>
+        <p class="row">Previous Searches:</p>
+        <div id="cityPrevious"></div>
 
         <today class="today-row row">
             <div class="col">
