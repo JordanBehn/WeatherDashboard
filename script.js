@@ -10,7 +10,7 @@ $("#search").click(function() {
 
 function renderForecast(cityInput) {
     //apikey = "87f0c9d5a9813668cae2ebe11bcb2972";
-    let queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityInput + "&units=imperial&appid=87f0c9d5a9813668cae2ebe11bcb2972";
+    let queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityInput + "&units=imperial&appid=87f0c9d5a9813668cae2ebe11bcb2972";
     $.ajax({
         url: queryURL,
         method: "GET"
@@ -32,7 +32,7 @@ function renderForecast(cityInput) {
         lat = response.city.coord.lat;
         long = response.city.coord.lon;
 
-        let uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + long + "&appid=87f0c9d5a9813668cae2ebe11bcb2972";
+        let uvURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + long + "&appid=87f0c9d5a9813668cae2ebe11bcb2972";
         $.ajax({
                 url: uvURL,
                 method: "GET"
@@ -75,7 +75,7 @@ function renderFiveDay(lat, long) {
             $("#day-" + i).append("<p>High of " + tempMax + " degrees</p>");
             $("#day-" + i).append("<p>Low of " + tempMin + " degrees</p>");
             $("#day-" + i).append("<p>Humidity: " + hum + "</p>");
-            $("#day-" + i).append("<image src='http://openweathermap.org/img/wn/" + icon + "@2x.png'>");
+            $("#day-" + i).append("<image src='https://openweathermap.org/img/wn/" + icon + "@2x.png'>");
 
         }
     })
