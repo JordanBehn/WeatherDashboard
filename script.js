@@ -1,14 +1,25 @@
 //get current moment
 var mom = moment().format("dddd, MMMM Do YYYY");
 $("#currentDay").text(mom);
+//render previously searched buttons
+renderCityButtons()
+
 //on click of button run api call
 $("#search").click(function() {
+    //takes in input city, runs forecast
     let cityInput = $("#cityInput").val();
-
     renderForecast(cityInput);
+    //saves city name in list of previous searches
+    let savedCities = JSON.parse(window.localStorage.getItem("cities")) || [];
+    console.log($("#cityInput").text())
+    savedCities.push($("#cityInput").val());
+    window.localStorage.setItem("cities", JSON.stringify(savedCities));
+    //remove buttons and render them from list
+    renderCityButtons()
 })
 
 function renderForecast(cityInput) {
+    //openweather api query for input city
     //apikey = "87f0c9d5a9813668cae2ebe11bcb2972";
     let queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityInput + "&units=imperial&appid=87f0c9d5a9813668cae2ebe11bcb2972";
     $.ajax({
@@ -16,13 +27,11 @@ function renderForecast(cityInput) {
         method: "GET"
     }).then(function(response) {
         //store important info about today's weather
-        console.log(response)
         let city = response.city.name;
         let temp = response.list[0].main.temp;
         let humidity = response.list[0].main.humidity;
         let wind = response.list[0].wind.speed;
         let weatherIcon = response.list[0].weather[0].icon;
-        console.log(weatherIcon);
         //display weather info
         $('#city').text(city);
         $('#temp').text("Temperature: " + temp);
@@ -67,8 +76,6 @@ function renderFiveDay(lat, long) {
         url: fiveDayURL,
         method: "GET"
     }).then(function(fiveDayresponse) {
-        console.log(fiveDayresponse);
-
         for (i = 1; i < 6; i++) {
             //make div for each day, starting with i = 1 because we aren't interested in current day
             let dayDiv = $("<day-" + i + " class='col-2' id=day-" + i + ">");
@@ -90,3 +97,23 @@ function renderFiveDay(lat, long) {
         }
     })
 }
+
+function renderCityButtons() {
+    $("#previousSearches").html('')
+    var cityBtns = JSON.parse(window.localStorage.getItem("cities"));
+    //for each city in local storage, create and append button
+    for (var i = 0; i < cityBtns.length; i++) {
+        var btnDiv = $("<div>");
+        var btn = $("<button>");
+        btn.addClass("city-btn");
+        btn.attr("name", cityBtns[i]);
+        btn.text(cityBtns[i]);
+        btnDiv.append(btn);
+        $("#previousSearches").append(btnDiv);
+    }
+}
+//on city button click, get forecast for that city
+$(".city-btn").click(function() {
+    console.log($(this).attr("name"))
+    renderForecast($(this).attr("name"));
+})
