@@ -61,7 +61,7 @@ function renderFiveDay(lat, long) {
 
         for (i = 1; i < 6; i++) {
             //make div for each day, starting with i = 1 because we aren't interested in current day
-            let dayDiv = $("<day-" + i + " id=day-" + i + ">");
+            let dayDiv = $("<day-" + i + " class='col-2' id=day-" + i + ">");
             $(".days").append(dayDiv);
             //increment date
             dayInc = moment().date(currentDate + i).format("MM/DD");
