@@ -8,12 +8,13 @@
     <!-- <link rel="stylesheet" href="style.css" /> -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+
 </head>
 
 <body>
     <header class="jumbotron">
         <h1>Weather Dashboard</h1>
-        <!-- <p class="lead">Welcome to your weather dashboard.</p> -->
         <p id="currentDay" class="lead"></p>
     </header>
     <div class="container">
@@ -26,7 +27,7 @@
 
         </div>
         <div class="row">
-            <div class="row">
+            <today class="today-row">
                 <div class="col">
                     <div id="city"></div>
                     <div id="temp"></div>
@@ -34,44 +35,15 @@
                     <div id="wind"></div>
                     <div id="uv-index"></div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-2 day-1">
-                    <div class="date"></div>
-                    <div class="icon"></div>
-                    <div class="temp-forecast"></div>
-                    <div class="humid"></div>
-                </div>
-                <div class="col-2 day-2">
-                    <div class="date"></div>
-                    <div class="icon"></div>
-                    <div class="temp-forecast"></div>
-                    <div class="humid"></div>
-                </div>
-                <div class="col-2 day-3">
-                    <div class="date"></div>
-                    <div class="icon"></div>
-                    <div class="temp-forecast"></div>
-                    <div class="humid"></div>
-                </div>
-                <div class="col-2 day-4">
-                    <div class="date"></div>
-                    <div class="icon"></div>
-                    <div class="temp-forecast"></div>
-                    <div class="humid"></div>
-                </div>
-                <div class="col-2 day-5">
-                    <div class="date"></div>
-                    <div class="icon"></div>
-                    <div class="temp-forecast"></div>
-                    <div class="humid"></div>
-                </div>
+            </today>
+            <div class="five-day-row">
+                <div class="days"></div>
             </div>
 
 
         </div>
     </div>
-    <script>
+    <!-- <script>
         //get current moment
         var mom = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
         $("#currentDay").text(mom);
@@ -96,14 +68,16 @@
                 console.log(long);
                 let uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + long + "&appid=" + apikey;
                 $.ajax({
-                    url: queryURL,
+                    url: uvURL,
                     method: "GET"
                 }).then(function(UVresponse) {
-                    console.log(UVresponse)
+                    console.log(UVresponse.value)
+                    $("#uv-index").text("" + UVresponse.value);
                 })
             })
         })
-    </script>
+    </script> -->
+    <script src="./script.js "></script>
 </body>
 
 </html>
